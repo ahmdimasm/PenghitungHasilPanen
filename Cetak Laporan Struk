@@ -1,4 +1,4 @@
-def program_panen_dengan_diskon():
+def program_panen_dengan_diskon()S
     total_berat = 0
     total_pendapatan = 0
     data_panen = {}
