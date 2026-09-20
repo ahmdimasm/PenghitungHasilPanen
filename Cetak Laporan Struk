@@ -1,0 +1,70 @@
+import datetime
+
+def cetak_laporan_struk(data_panen, total_berat, subtotal, diskon_persen, potongan_diskon, total_akhir):
+    """
+    Fungsi untuk mencetak dan menyimpan laporan struk transaksi
+    Dibuat untuk branch: feature-laporan
+    """
+    # Mengambil waktu saat ini untuk dicetak di struk
+    waktu_sekarang = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    
+    # Menyiapkan teks struk dalam bentuk list
+    struk = []
+    struk.append("=================================================")
+    struk.append("           LAPORAN STRUK TRANSAKSI PANEN         ")
+    struk.append("=================================================")
+    struk.append(f"Waktu Cetak : {waktu_sekarang}")
+    struk.append("-------------------------------------------------")
+    struk.append("RINCIAN KOMODITAS:")
+    
+    # Melakukan perulangan untuk setiap item panen
+    for item, data in data_panen.items():
+        struk.append(f" > {item.capitalize()} ({data['berat']} kg)")
+        struk.append(f"   Pendapatan : Rp {data['pendapatan']:,.2f}")
+        
+    struk.append("-------------------------------------------------")
+    struk.append(f"Total Berat Komoditas : {total_berat} kg")
+    struk.append(f"Subtotal Harga        : Rp {subtotal:,.2f}")
+    struk.append(f"Diskon ({diskon_persen:g}%)           : -Rp {potongan_diskon:,.2f}")
+    struk.append("=================================================")
+    struk.append(f"TOTAL BERSIH          : Rp {total_akhir:,.2f}")
+    struk.append("=================================================")
+    struk.append("        Terima kasih atas transaksi Anda!        ")
+    struk.append("=================================================\n")
+    
+    # Menggabungkan list menjadi satu teks utuh
+    teks_struk = "\n".join(struk)
+    
+    # 1. Menampilkan struk ke layar (Terminal)
+    print("\n" + teks_struk)
+    
+    # 2. Menyimpan struk ke dalam file teks (.txt)
+    # Membuat nama file unik berdasarkan tanggal dan jam
+    nama_file = f"Struk_Panen_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    
+    try:
+        with open(nama_file, "w") as file:
+            file.write(teks_struk)
+        print(f"[*] Berhasil: Laporan struk telah disimpan dengan nama '{nama_file}'")
+    except Exception as e:
+        print(f"[!] Error: Gagal menyimpan laporan struk ke file. Detail: {e}")
+
+# ==========================================
+# CONTOH PENGGUNAAN (TESTING)
+# ==========================================
+if __name__ == "__main__":
+    # Data ini nantinya didapatkan dari fitur input (Tivani) & perhitungan diskon (Dimas)
+    data_dummy = {
+        'padi': {'berat': 100, 'pendapatan': 600000},
+        'jagung': {'berat': 50, 'pendapatan': 250000}
+    }
+    
+    # Memanggil fungsi cetak struk
+    cetak_laporan_struk(
+        data_panen=data_dummy, 
+        total_berat=150, 
+        subtotal=850000, 
+        diskon_persen=10, 
+        potongan_diskon=85000, 
+        total_akhir=765000
+    )
