@@ -1,0 +1,83 @@
+def program_panen_dengan_diskon():
+    total_berat = 0
+    total_pendapatan = 0
+    data_panen = {}
+
+    print("=== Program Penghitung Hasil Panen & Penjualan ===")
+    print("Ketik 'selesai' pada nama tanaman jika sudah selesai memasukkan data.\n")
+
+    while True:
+        # Meminta input nama tanaman
+        tanaman = input("Masukkan nama tanaman: ").strip()
+        
+        if tanaman.lower() == 'selesai':
+            break
+            
+        try:
+            # Meminta input berat dan harga
+            berat = float(input(f"Masukkan berat panen {tanaman} (dalam kg): "))
+            if berat < 0:
+                print("Peringatan: Berat panen tidak boleh negatif!\n")
+                continue
+                
+            harga = float(input(f"Masukkan harga jual {tanaman} per kg (Rp): "))
+            if harga < 0:
+                print("Peringatan: Harga tidak boleh negatif!\n")
+                continue
+            
+            # Menghitung pendapatan untuk input saat ini
+            pendapatan = berat * harga
+            
+            # Menyimpan data ke dalam dictionary
+            if tanaman in data_panen:
+                data_panen[tanaman]['berat'] += berat
+                data_panen[tanaman]['pendapatan'] += pendapatan
+            else:
+                data_panen[tanaman] = {'berat': berat, 'pendapatan': pendapatan}
+                
+            total_berat += berat
+            total_pendapatan += pendapatan
+            print(f"Data {tanaman} berhasil ditambahkan! (Subtotal: Rp {pendapatan:,.2f})\n")
+            
+        except ValueError:
+            print("Error: Harap masukkan angka yang valid untuk berat dan harga!\n")
+
+    # Meminta input diskon jika ada data panen
+    if len(data_panen) > 0:
+        print("\n--- Pengaturan Diskon ---")
+        while True:
+            try:
+                diskon_persen = float(input("Masukkan persentase diskon yang diberikan (0-100)%: "))
+                if 0 <= diskon_persen <= 100:
+                    break
+                else:
+                    print("Error: Diskon harus berada di antara 0 hingga 100.")
+            except ValueError:
+                print("Error: Harap masukkan angka persentase yang valid!")
+
+        # Menghitung potongan dan total akhir
+        potongan_diskon = total_pendapatan * (diskon_persen / 100)
+        total_akhir = total_pendapatan - potongan_diskon
+
+        # Menampilkan hasil akhir
+        print("\n" + "="*45)
+        print("          NOTA PENJUALAN HASIL PANEN          ")
+        print("="*45)
+        
+        for item, data in data_panen.items():
+            print(f"- {item.capitalize()}: {data['berat']} kg")
+            print(f"  Pendapatan   : Rp {data['pendapatan']:,.2f}")
+        
+        print("-" * 45)
+        print(f"Total Berat    : {total_berat} kg")
+        print(f"Subtotal Harga : Rp {total_pendapatan:,.2f}")
+        print(f"Diskon ({diskon_persen}%)  : -Rp {potongan_diskon:,.2f}")
+        print("="*45)
+        print(f"TOTAL BERSIH   : Rp {total_akhir:,.2f}")
+        print("="*45)
+    else:
+        print("\nTidak ada data panen yang diproses.")
+
+# Menjalankan program
+if __name__ == "__main__":
+    program_panen_dengan_diskon()
