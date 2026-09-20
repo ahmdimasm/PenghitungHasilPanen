@@ -2,7 +2,7 @@ import datetime
 
 def cetak_laporan_struk(data_panen, total_berat, subtotal, diskon_persen, potongan_diskon, total_akhir):
     """
- dan menyimpan laporan struk transaksi
+    Fungsi untuk mencetak dan menyimpan laporan struk transaksi
     Dibuat untuk branch: feature-laporan
     """
     # Mengambil waktu saat ini untuk dicetak di struk
