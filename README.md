@@ -10,6 +10,8 @@
 
 Aplikasi Python ini digunakan untuk mencatat transaksi penjualan komoditas panen, menghitung potongan diskon berdasarkan besaran subtotal, serta mencetak laporan/struk transaksi akhir secara otomatis.
 
+---
+
 graph TD
     A([Mulai Program]) --> B(Inisialisasi Data Kosong)
     
